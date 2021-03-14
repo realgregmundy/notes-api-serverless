@@ -7,6 +7,9 @@ custom:
   pythonRequirements:
     dockerizePip: false
 
+package:
+  individually: true
+
 provider:
   name: aws
   runtime: python3.8
