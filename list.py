@@ -7,9 +7,10 @@ from lib.dynamo_db import query
 
 def main(event, context):
     try:
+        user_id = event['requestContext']['identity']['cognitoIdentityId']
         key_condition_expression = 'userId = :userId'
         expression_attribute_values = {
-            ':userId': '123'
+            ':userId': user_id
         }
         result = query(os.getenv('tableName'),
                        key_condition_expression, expression_attribute_values)

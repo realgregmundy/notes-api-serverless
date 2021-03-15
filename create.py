@@ -8,8 +8,9 @@ from lib.dynamo_db import put
 def main(event, context):
     try:
         data = json.loads(event['body'])
+        user_id = event['requestContext']['identity']['cognitoIdentityId']
         item = {
-            'userId': '123',
+            'userId': user_id,
             'noteId': str(uuid4()),
             'content': data['content'],
             'attachment': data['attachment'],

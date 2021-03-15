@@ -8,8 +8,9 @@ from lib.dynamo_db import get
 def main(event, context):
     try:
         id = event['pathParameters']['id']
+        user_id = event['requestContext']['identity']['cognitoIdentityId']
         key = {
-            'userId': '123',
+            'userId': user_id,
             'noteId': id
         }
         result = get(os.getenv('tableName'), key)
