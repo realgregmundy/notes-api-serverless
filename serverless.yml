@@ -10,6 +10,11 @@ custom:
 package:
   individually: true
 
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}
+
 provider:
   name: aws
   runtime: python3.8
