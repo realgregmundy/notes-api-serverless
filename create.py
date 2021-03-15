@@ -13,7 +13,7 @@ def main(event, context):
             'userId': user_id,
             'noteId': str(uuid4()),
             'content': data['content'],
-            'attachment': data['attachment'],
+            'attachment': data['attachment'] if data['attachment'] else None,
             'createdAt': str(datetime.utcnow())
         }
         if put(os.getenv('tableName'), item):
