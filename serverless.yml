@@ -52,3 +52,10 @@ functions:
           path: notes
           method: get
           authorizer: aws_iam
+
+  update:
+    handler: update.main
+    events:
+      - http:
+          path: notes/{id}
+          method: put

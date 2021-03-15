@@ -2,7 +2,7 @@ import os
 import json
 from uuid import uuid4
 from datetime import datetime
-from lib.dynamo_db import query
+from libs.dynamo_db import query
 
 
 def main(event, context):
