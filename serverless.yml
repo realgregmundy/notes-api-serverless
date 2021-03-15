@@ -15,11 +15,37 @@ provider:
   runtime: python3.8
   stage: dev
   region: us-east-2
+  environment:
+    tableName: notes
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource: "arn:aws:dynamodb:us-east-2:*:*"
 
 functions:
-  hello:
-    handler: handler.hello
+  create:
+    handler: create.main
     events:
       - http:
-          path: /
+          path: notes
+          method: post
+  get:
+    handler: get.main
+    events:
+      - http:
+          path: notes/{id}
+          method: get
+
+  list:
+    handler: list.main
+    events:
+      - http:
+          path: notes
           method: get
