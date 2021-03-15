@@ -28,6 +28,7 @@ def main(event, context):
         else:
             raise Exception('Invalid message body.')
     except Exception as e:
+        print(str(e))
         return {
             'statusCode': 500,
             'headers': {
