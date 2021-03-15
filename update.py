@@ -8,9 +8,8 @@ from libs.dynamo_db import update
 def main(event, context):
     try:
         data = json.loads(event['body'])
-        user_id = '123'
+        user_id = event['requestContext']['identity']['cognitoIdentityId']
         id = event['pathParameters']['id']
-        # user_id = event['requestContext']['identity']['cognitoIdentityId']
 
         key = {
             'userId': user_id,
@@ -26,11 +25,20 @@ def main(event, context):
         if result:
             return {
                 'statusCode': 200,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': True
+                },
                 'body': json.dumps(result)
             }
         else:
             raise Exception(f'Cannot find item with id {id}.')
     except Exception as e:
-        return {'statusCode': 500,
-                'body': json.dumps(str(e))
-                }
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': True
+            },
+            'body': json.dumps(str(e))
+        }

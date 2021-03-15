@@ -52,5 +52,11 @@ def update(table_name: str, key: dict, update_expression: str,
         return None
 
 
-def delete(**kwargs):
-    pass
+def delete(table_name: str, key: dict):
+    try:
+        table = DYNAMO_DB.Table(table_name)
+        table.delete_item(Key=key)
+        return True
+    except Exception as e:
+        print(str(e))
+        return False

@@ -17,11 +17,20 @@ def main(event, context):
         if result:
             return {
                 'statusCode': 200,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': True
+                },
                 'body': json.dumps(result)
             }
         else:
             raise Exception('Item not found!')
     except Exception as e:
-        return {'statusCode': 500,
-                'body': json.dumps(str(e))
-                }
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': True
+            },
+            'body': json.dumps(str(e))
+        }

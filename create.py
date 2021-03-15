@@ -19,11 +19,20 @@ def main(event, context):
         if put(os.getenv('tableName'), item):
             return {
                 'statusCode': 200,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': True
+                },
                 'body': json.dumps(item)
             }
         else:
             raise Exception('Invalid message body.')
     except Exception as e:
-        return {'statusCode': 500,
-                'body': json.dumps(str(e))
-                }
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': True
+            },
+            'body': json.dumps(str(e))
+        }

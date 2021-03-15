@@ -36,6 +36,7 @@ functions:
       - http:
           path: notes
           method: post
+          cors: true
           authorizer: aws_iam
   get:
     handler: get.main
@@ -43,6 +44,7 @@ functions:
       - http:
           path: notes/{id}
           method: get
+          cors: true
           authorizer: aws_iam
 
   list:
@@ -51,6 +53,7 @@ functions:
       - http:
           path: notes
           method: get
+          cors: true
           authorizer: aws_iam
 
   update:
@@ -59,4 +62,14 @@ functions:
       - http:
           path: notes/{id}
           method: put
+          cors: true
+          authorizer: aws_iam
+
+  delete:
+    handler: delete.main
+    events:
+      - http:
+          path: notes/{id}
+          method: delete
+          cors: true
           authorizer: aws_iam
