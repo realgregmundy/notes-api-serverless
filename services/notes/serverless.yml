@@ -6,6 +6,9 @@ plugins:
 custom:
   pythonRequirements:
     dockerizePip: false
+  
+  stage: ${opt:stage, self:provider.stage}
+  sstApp: ${self:custom.stage}-notes-infra
 
 package:
   individually: true
@@ -14,6 +17,8 @@ package:
 resources:
   # API Gateway Errors
   - ${file(resources/api-gateway-errors.yml)}
+  # Cognito Identity Pool Policy
+  - ${file(resources/cognito-policy.yml)}
 
 provider:
   name: aws
@@ -21,7 +26,7 @@ provider:
   stage: dev
   region: us-east-2
   environment:
-    tableName: notes
+    tableName: !ImportValue '${self:custom.sstApp}-TableName'
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -32,7 +37,8 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
         - dynamodb:DescribeTable
-      Resource: "arn:aws:dynamodb:us-east-2:*:*"
+      Resource:
+        - !ImportValue '${self:custom.sstApp}-TableArn'
 
 functions:
   create:
